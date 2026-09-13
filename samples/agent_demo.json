@@ -1,0 +1,30 @@
+{
+  "agent": {
+    "name": "veriton-x402-html-json",
+    "displayName": "Veriton HTML→JSON (T3N enterprise)",
+    "description": "Trusted enterprise extraction agent: fetch public HTML and return structured JSON over live Base USDC x402, with T3N ADK identity + audit hooks when T3N_API_KEY is set.",
+    "capabilities": [
+      "html-to-json",
+      "x402",
+      "base-usdc",
+      "structured-extraction"
+    ],
+    "repo": "https://github.com/veriton-dev/t3n-x402-html-json-agent"
+  },
+  "x402": {
+    "health_ok": true,
+    "version": "0.1.32",
+    "discovery_name": "veriton-html-json-api",
+    "paywall_status": 402
+  },
+  "maintenance": [
+    "Single origin proxy on Vercel (no tunnel)",
+    "Prices in /.well-known/x402",
+    "stdlib-friendly clients; no custom chain code required for buyers",
+    "Optional T3N wrap: identity + audit without rewriting extraction core"
+  ],
+  "t3n": {
+    "connected": false,
+    "error": "T3N_API_KEY not set (claim-page required)"
+  }
+}

@@ -1,0 +1,4 @@
+health 200 true 0.1.32
+discovery 200 veriton-html-json-api
+html-to-json probe 402 { "x402Version": 2, "error": "Payment Required", "resource": { "url": "https://veriton-x402-proxy.vercel.app/v1/html-to-json", "description": "Extract structured JSON from an HTML string for agents (title, meta, headings, link
+x402 paywall intact (expected without payment header)
