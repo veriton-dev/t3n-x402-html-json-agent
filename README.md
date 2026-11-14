@@ -1,5 +1,7 @@
 # t3n-x402-html-json-agent
 
+> **Status and safety notice (2026-11-14):** This repository contains a client/demo, not the extraction or payment server. The documented endpoint returned HTTP 502 when checked; current availability, pricing, payment enforcement, and settlement are **not verified**. Do not send a payment based on the historical claims below. The T3N demo shows separate testnet authentication, not a verified extraction-request audit integration. The existing smoke/demo commands can exit successfully even when the unpaid extraction probe returns HTTP 200, so they must **not** be used as a paywall security gate. The statements below describe historical intended or claimed behavior, not current verified service.
+
 **Superteam Earn bounty:** [Try out new docs to build a trusted agent with T3N](https://earn.superteam.fun/listing/t3n-agent-build-challenge/) (290 USDC pool, deadline 2026-09-16).
 
 ## What this agent does
