@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Enterprise HTML→structured JSON agent for Terminal 3 (T3N) Superteam bounty — wraps live Base USDC x402 rails with T3N ADK auth/audit shape.",
+  "description": "Client demo for probing an external x402 HTML-to-JSON endpoint and optional T3N authentication",
   "scripts": {
     "quickstart": "tsx src/quickstart.ts",
     "agent:demo": "tsx src/agent_demo.ts",
-    "smoke:x402": "tsx src/smoke_x402.ts"
+    "smoke:x402": "tsx src/smoke_x402.ts",
+    "test": "node --test test/*.test.mjs"
   },
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
     "@terminal3/t3n-sdk": "5.2.0"
   },

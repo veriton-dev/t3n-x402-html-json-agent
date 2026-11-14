@@ -2,49 +2,23 @@
 
 > **Status and safety notice (2026-11-14):** This repository contains a client/demo, not the extraction or payment server. The documented endpoint returned HTTP 502 when checked; current availability, pricing, payment enforcement, and settlement are **not verified**. Do not send a payment based on the historical claims below. The T3N demo shows separate testnet authentication, not a verified extraction-request audit integration. The existing smoke/demo commands can exit successfully even when the unpaid extraction probe returns HTTP 200, so they must **not** be used as a paywall security gate. The statements below describe historical intended or claimed behavior, not current verified service.
 
-**Superteam Earn bounty:** [Try out new docs to build a trusted agent with T3N](https://earn.superteam.fun/listing/t3n-agent-build-challenge/) (290 USDC pool, deadline 2026-09-16).
+The notice above is preserved verbatim from public commit `3a335ca`. The HTTP 200 behavior describes that historical revision; the current probes reject non-402 responses. They still are not a comprehensive paywall security gate.
 
-## What this agent does
+This repository contains a **client demo**, not the extraction service, x402 server, payment settlement implementation, or an integrated audit system. The configured external service's deployment, availability, pricing, recipient and behavior are currently **unverified**. Historical files under `samples/` and `docs/SUBMISSION.md` are not evidence of present operation; any claims there are historical and unverified. T3N authentication is optional and separate from extraction; it does not establish audited actions.
 
-Enterprise-ready **HTML → structured JSON** extraction agent:
-
-1. **Live production rail already paying on Base USDC (x402)** — `https://veriton-x402-proxy.vercel.app`
-2. **T3N ADK identity/audit wrap** (when `T3N_API_KEY` is set) so enterprises get `did:t3n` + TEE trust anchor without rewriting the extraction core
-3. **Easy maintenance** — one Vercel origin, open discovery document, no always-on tunnel
-
-## Why useful (enterprise)
-
-- Agents and backends need **clean JSON from messy HTML** without standing up scrapers
-- Metered **0.01 USDC** calls on Base — no API key provisioning drama for buyers
-- Optional T3N layer adds **verifiable agent identity** and audited actions for compliance-minded teams
-
-## Quick start
+## Run
 
 ```bash
 npm install
-npm run smoke:x402    # live health + discovery + 402 paywall probe (no secrets)
-npm run agent:demo    # JSON demo report
-# after claim key:
-export T3N_API_KEY=...
-npm run quickstart    # did:t3n authenticate
+npm test                 # local mocks only, no payment
+npm run smoke:x402       # unpaid network probes; nonzero on failed checks
+npm run agent:demo       # unpaid probes, optionally attempts T3N testnet auth
+npm run quickstart       # optional T3N testnet authentication
 ```
 
-Claim key (shown once): https://www.terminal3.io/claim-page  
-Docs walkthrough: https://docs.terminal3.io/developers/adk/get-started/quickstart
+Both probes require successful health and discovery responses and an x402 v2 challenge containing at least one option matching the narrowly supported profile from an unpaid extraction request. A 200 or any other non-402 response fails. The validator accepts a JSON body or base64 `PAYMENT-REQUIRED` header, checks a narrow subset: exact EVM EIP-3009 on Base mainnet (`eip155:8453`) or Base Sepolia (`eip155:84532`), including EIP-712 name and version, and checks explicitly configured terms against a single accepted option. Set any independently verified expectations using `X402_EXPECT_NETWORK`, `X402_EXPECT_ASSET`, `X402_EXPECT_PAY_TO`, `X402_EXPECT_AMOUNT` (integer atomic units), and `X402_EXPECT_SCHEME`. Comparisons are exact, including case. Other schemes and transfer methods are rejected. This is not complete protocol, on-chain, checksum, signature, asset-capability, or extension semantics validation; nonempty extensions are rejected because their semantics are not implemented. It accepts one supported option even if other options are unsupported or malformed; it does not validate every option. Resource URLs are checked for syntax only, not matched to the requested endpoint. Zero amounts are structurally accepted and require an independently verified expectation if inappropriate. Based on the [x402 v2 core](https://github.com/coinbase/x402/blob/main/specs/x402-specification-v2.md) and [exact EVM](https://github.com/coinbase/x402/blob/main/specs/schemes/exact/scheme_exact_evm.md) specifications. No expected terms are assumed by default: without them a structurally valid challenge does **not** establish the intended price, asset, recipient, network or authenticity. Verify the service and terms independently; these scripts never make payments or test settlement. They do not prove that every endpoint or request is gated.
 
-## Handover
-
-**Prefer to continue running** this agent under Veriton ops (Base USDC pay-to `0xa75Cc8545B169F0BeF2f29c9CCF86bc686D039E8`).  
-Handover package if Terminal 3 wants to host: this repo + Vercel project transfer notes in `docs/HANDOVER.md`.
-
-## Submission
-
-See `docs/SUBMISSION.md` (public write-up; GitHub-native stand-in for Google Doc until Doc link is attached).
-
-## Bugs / docs friction
-
-Logged in `docs/BUGS.md` for Superteam judging (bug submission quality).
+Set `T3N_API_KEY` only in a secure environment if trying optional authentication. Do not paste secrets into logs. See [handover](docs/HANDOVER.md).
 
 ## License
-
 MIT

@@ -17,7 +17,7 @@ async function main() {
         "export T3N_API_KEY=... && npm run quickstart",
       ],
       agent: AGENT,
-      x402_live: X402.origin,
+      x402_origin_unverified: X402.origin,
     }, null, 2));
     return;
   }
@@ -48,7 +48,7 @@ async function main() {
   console.log(JSON.stringify({ ok: true, tenantDid, address, agent: AGENT.name }, null, 2));
 }
 
-main().catch((e) => {
-  console.error(e);
+main().catch(() => {
+  console.error("T3N quickstart failed");
   process.exit(1);
 });
